@@ -1095,6 +1095,7 @@ add_library(mixxx-lib STATIC EXCLUDE_FROM_ALL
   src/preferences/dialog/dlgprefinterfacedlg.ui
   src/preferences/dialog/dlgprefkey.cpp
   src/preferences/dialog/dlgprefkeydlg.ui
+  src/preferences/dialog/dlgprefkeyboardmapping.cpp
   src/preferences/dialog/dlgpreflibrary.cpp
   src/preferences/dialog/dlgpreflibrarydlg.ui
   src/preferences/dialog/dlgprefmixer.cpp

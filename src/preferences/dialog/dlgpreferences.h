@@ -20,6 +20,7 @@ class EffectsManager;
 class Library;
 class VinylControlManager;
 class DlgPrefControllers;
+class KeyboardEventFilter;
 
 namespace mixxx {
 class ScreensaverManager;
@@ -51,7 +52,9 @@ class DlgPreferences : public QDialog, public Ui::DlgPreferencesDlg {
             std::shared_ptr<VinylControlManager> pVCManager,
             std::shared_ptr<EffectsManager> pEffectsManager,
             std::shared_ptr<SettingsManager> pSettingsManager,
-            std::shared_ptr<Library> pLibrary);
+            std::shared_ptr<Library> pLibrary,
+            std::shared_ptr<ConfigObject<ConfigValueKbd>> pKeyboardConfig,
+            std::shared_ptr<KeyboardEventFilter> pKeyboardEventFilter);
     virtual ~DlgPreferences();
 
     void addPageWidget(PreferencesPage page,

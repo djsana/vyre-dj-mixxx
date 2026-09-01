@@ -27,6 +27,7 @@
 #include "preferences/dialog/dlgprefdeck.h"
 #include "preferences/dialog/dlgprefeffects.h"
 #include "preferences/dialog/dlgprefinterface.h"
+#include "preferences/dialog/dlgprefkeyboardmapping.h"
 #include "preferences/dialog/dlgprefmixer.h"
 #include "preferences/dialog/dlgprefwaveform.h"
 
@@ -55,7 +56,9 @@ DlgPreferences::DlgPreferences(
         std::shared_ptr<VinylControlManager> pVCManager,
         std::shared_ptr<EffectsManager> pEffectsManager,
         std::shared_ptr<SettingsManager> pSettingsManager,
-        std::shared_ptr<Library> pLibrary)
+        std::shared_ptr<Library> pLibrary,
+        std::shared_ptr<ConfigObject<ConfigValueKbd>> pKeyboardConfig,
+        std::shared_ptr<KeyboardEventFilter> pKeyboardEventFilter)
         : m_allPages(),
           m_pConfig(pSettingsManager->settings()),
           m_pageSizeHint(QSize(0, 0)) {
@@ -157,6 +160,15 @@ DlgPreferences::DlgPreferences(
                                   contentsTreeWidget, QTreeWidgetItem::Type)),
             tr("Interface"),
             "ic_preferences_interface.svg");
+
+    addPageWidget(PreferencesPage(
+                          new DlgPrefKeyboardMapping(this,
+                                  m_pConfig,
+                                  std::move(pKeyboardConfig),
+                                  std::move(pKeyboardEventFilter)),
+                          new QTreeWidgetItem(contentsTreeWidget, QTreeWidgetItem::Type)),
+            tr("Keyboard Mapping"),
+            "ic_preferences_controllers.svg");
 
     // ugly proxy for determining whether this is being instantiated for QML or legacy QWidgets GUI
     if (pSkinLoader) {

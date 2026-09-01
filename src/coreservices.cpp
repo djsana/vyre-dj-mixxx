@@ -779,7 +779,9 @@ std::shared_ptr<QDialog> CoreServices::makeDlgPreferences() const {
             getVinylControlManager(),
             getEffectsManager(),
             getSettingsManager(),
-            getLibrary());
+            getLibrary(),
+            getKeyboardConfig(),
+            getKeyboardEventFilter());
     return pDlgPreferences;
 }
 
