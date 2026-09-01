@@ -70,9 +70,15 @@ class EngineDeck : public EngineChannel, public AudioDestination {
     void slotPassthroughChangeRequest(double v);
 
   private:
+    void processStemLite(CSAMPLE* pOutput, int sampleCount);
+
     UserSettingsPointer m_pConfig;
     EngineBuffer* m_pBuffer;
     EnginePregain* m_pPregain;
+    ControlPushButton* m_pStemVocals;
+    ControlPushButton* m_pStemInstrumental;
+    CSAMPLE_GAIN m_stemVocalMix{0};
+    CSAMPLE_GAIN m_stemInstrumentalMix{0};
 
     // Begin vinyl passthrough fields
     QScopedPointer<ControlObject> m_pInputConfigured;

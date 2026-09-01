@@ -1,0 +1,36 @@
+<Template>
+  <WidgetGroup>
+    <ObjectName>VyrePads</ObjectName>
+    <Layout>vertical</Layout>
+    <SizePolicy>me,min</SizePolicy>
+    <Children>
+      <WidgetGroup>
+        <ObjectName>VyreStemPads</ObjectName>
+        <Layout>horizontal</Layout>
+        <Children>
+          <Label><ObjectName>VyreStemLabel</ObjectName><Text>STEM LITE</Text><Size>76f,30f</Size><Alignment>center</Alignment></Label>
+          <PushButton><ObjectName>VyrePadVocal</ObjectName><Size>me,30f</Size><NumberStates>2</NumberStates><State><Number>0</Number><Text>VOCAL</Text></State><State><Number>1</Number><Text>VOCAL ON</Text></State><Connection><ConfigKey><Variable name="Group"/>,stem_vocals</ConfigKey><ButtonState>LeftButton</ButtonState></Connection></PushButton>
+          <PushButton><ObjectName>VyrePadInstrumental</ObjectName><Size>me,30f</Size><NumberStates>2</NumberStates><State><Number>0</Number><Text>INSTRUMENTAL</Text></State><State><Number>1</Number><Text>INSTRUMENTAL ON</Text></State><Connection><ConfigKey><Variable name="Group"/>,stem_instrumental</ConfigKey><ButtonState>LeftButton</ButtonState></Connection></PushButton>
+        </Children>
+      </WidgetGroup>
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Children>
+          <PushButton><ObjectName>VyrePadLoop</ObjectName><Size>me,30f</Size><NumberStates>2</NumberStates><State><Number>0</Number><Text>1 BEAT</Text></State><State><Number>1</Number><Text>1 LOOP</Text></State><Connection><ConfigKey><Variable name="Group"/>,beatloop_1_toggle</ConfigKey><ButtonState>LeftButton</ButtonState></Connection></PushButton>
+          <PushButton><ObjectName>VyrePadLoop</ObjectName><Size>me,30f</Size><NumberStates>2</NumberStates><State><Number>0</Number><Text>2 BEAT</Text></State><State><Number>1</Number><Text>2 LOOP</Text></State><Connection><ConfigKey><Variable name="Group"/>,beatloop_2_toggle</ConfigKey><ButtonState>LeftButton</ButtonState></Connection></PushButton>
+          <PushButton><ObjectName>VyrePadLoop</ObjectName><Size>me,30f</Size><NumberStates>2</NumberStates><State><Number>0</Number><Text>4 BEAT</Text></State><State><Number>1</Number><Text>4 LOOP</Text></State><Connection><ConfigKey><Variable name="Group"/>,beatloop_4_toggle</ConfigKey><ButtonState>LeftButton</ButtonState></Connection></PushButton>
+          <PushButton><ObjectName>VyrePadLoop</ObjectName><Size>me,30f</Size><NumberStates>2</NumberStates><State><Number>0</Number><Text>8 BEAT</Text></State><State><Number>1</Number><Text>8 LOOP</Text></State><Connection><ConfigKey><Variable name="Group"/>,beatloop_8_toggle</ConfigKey><ButtonState>LeftButton</ButtonState></Connection></PushButton>
+        </Children>
+      </WidgetGroup>
+      <WidgetGroup>
+        <Layout>horizontal</Layout>
+        <Children>
+          <PushButton><ObjectName>VyrePadIn</ObjectName><Size>me,30f</Size><NumberStates>1</NumberStates><State><Number>0</Number><Text>LOOP IN</Text></State><Connection><ConfigKey><Variable name="Group"/>,loop_in</ConfigKey></Connection></PushButton>
+          <PushButton><ObjectName>VyrePadOut</ObjectName><Size>me,30f</Size><NumberStates>1</NumberStates><State><Number>0</Number><Text>LOOP OUT</Text></State><Connection><ConfigKey><Variable name="Group"/>,loop_out</ConfigKey></Connection></PushButton>
+          <PushButton><ObjectName>VyrePadReloop</ObjectName><Size>me,30f</Size><NumberStates>2</NumberStates><State><Number>0</Number><Text>RELOOP</Text></State><State><Number>1</Number><Text>EXIT</Text></State><Connection><ConfigKey><Variable name="Group"/>,reloop_toggle</ConfigKey><ButtonState>LeftButton</ButtonState></Connection></PushButton>
+          <PushButton><ObjectName>VyrePadRoll</ObjectName><Size>me,30f</Size><NumberStates>1</NumberStates><State><Number>0</Number><Text>ROLL 4</Text></State><Connection><ConfigKey><Variable name="Group"/>,beatlooproll_4_activate</ConfigKey></Connection></PushButton>
+        </Children>
+      </WidgetGroup>
+    </Children>
+  </WidgetGroup>
+</Template>

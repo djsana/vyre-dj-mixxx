@@ -2162,34 +2162,42 @@ QString LegacySkinParser::getStyleFromNode(const QDomNode& node) {
     }
 
     QString style;
-    if (styleElement.hasAttribute("src")) {
-        QString styleSrc = styleElement.attribute("src");
-
-        QFile file(styleSrc);
-        if (file.open(QIODevice::ReadOnly)) {
-            QByteArray fileBytes = file.readAll();
-
-            style = QString::fromLocal8Bit(fileBytes);
+    for (QDomNode styleNode = styleElement;
+         !styleNode.isNull();
+         styleNode = styleNode.nextSibling()) {
+        if (!styleNode.isElement() || styleNode.nodeName() != "Style") {
+            continue;
         }
+        styleElement = styleNode.toElement();
+        QString styleBlock;
+        if (styleElement.hasAttribute("src")) {
+            QString styleSrc = styleElement.attribute("src");
 
-        QString platformSpecificAttribute;
+            QFile file(styleSrc);
+            if (file.open(QIODevice::ReadOnly)) {
+                QByteArray fileBytes = file.readAll();
+
+                styleBlock = QString::fromLocal8Bit(fileBytes);
+            }
+
+            QString platformSpecificAttribute;
 #if defined(Q_OS_MAC)
-        platformSpecificAttribute = "src-mac";
+            platformSpecificAttribute = "src-mac";
 #elif defined(__WINDOWS__)
-        platformSpecificAttribute = "src-windows";
+            platformSpecificAttribute = "src-windows";
 #else
-        platformSpecificAttribute = "src-linux";
+            platformSpecificAttribute = "src-linux";
 #endif
 
-        if (styleElement.hasAttribute(platformSpecificAttribute)) {
-            QString platformSpecificSrc = styleElement.attribute(platformSpecificAttribute);
-            QFile platformSpecificFile(platformSpecificSrc);
-            if (platformSpecificFile.open(QIODevice::ReadOnly)) {
-                QByteArray fileBytes = platformSpecificFile.readAll();
+            if (styleElement.hasAttribute(platformSpecificAttribute)) {
+                QString platformSpecificSrc = styleElement.attribute(platformSpecificAttribute);
+                QFile platformSpecificFile(platformSpecificSrc);
+                if (platformSpecificFile.open(QIODevice::ReadOnly)) {
+                    QByteArray fileBytes = platformSpecificFile.readAll();
 
-                style += QString::fromLocal8Bit(fileBytes);
+                    styleBlock += QString::fromLocal8Bit(fileBytes);
+                }
             }
-        }
 
 // This section can be enabled on demand. It is useful to tweak
 // pixel sized values for different scalings. But we should know if this is
@@ -2210,7 +2218,7 @@ QString LegacySkinParser::getStyleFromNode(const QDomNode& node) {
             QFile file(strNewName);
             if (file.open(QIODevice::ReadOnly)) {
                 QByteArray fileBytes = file.readAll();
-                style.prepend(QString::fromLocal8Bit(fileBytes));
+                styleBlock.prepend(QString::fromLocal8Bit(fileBytes));
             }
         } else if (scaleFactor >= 2) {
             // Try to load with @2x suffix
@@ -2220,13 +2228,15 @@ QString LegacySkinParser::getStyleFromNode(const QDomNode& node) {
             QFile file(strNewName);
             if (file.open(QIODevice::ReadOnly)) {
                 QByteArray fileBytes = file.readAll();
-                style.prepend(QString::fromLocal8Bit(fileBytes));
+                styleBlock.prepend(QString::fromLocal8Bit(fileBytes));
             }
         }
 #endif
-    } else {
-        // If no src attribute, use the node data as text.
-        style = styleElement.text();
+        } else {
+            // If no src attribute, use the node data as text.
+            styleBlock = styleElement.text();
+        }
+        style += styleBlock;
     }
 
     // Legacy fixes: In Mixxx <1.12.0 we used QGroupBox for WWidgetGroup. Some

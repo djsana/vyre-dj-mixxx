@@ -1,0 +1,53 @@
+<Template>
+  <WidgetGroup>
+    <ObjectName>DeckContainer</ObjectName>
+    <Layout>horizontal</Layout>
+    <SizePolicy>me,min</SizePolicy>
+    <Children>
+      <WidgetGroup>
+        <ObjectName>Deck<Variable name="ChanNum"/></ObjectName>
+        <Layout>horizontal</Layout>
+        <SizePolicy>me,min</SizePolicy>
+        <Children>
+          <WidgetGroup>
+            <ObjectName>DeckRows12345</ObjectName>
+            <SizePolicy>me,min</SizePolicy>
+            <Layout>vertical</Layout>
+            <Children>
+              <Template src="skins:LateNight/decks/row_1_keyVinylFx.xml">
+                <SetVariable name="Type">deck</SetVariable>
+              </Template>
+              <WidgetGroup>
+                <ObjectName>DeckRows234</ObjectName>
+                <SizePolicy>me,min</SizePolicy>
+                <Layout>horizontal</Layout>
+                <Children>
+                  <WidgetGroup>
+                    <ObjectName>SpinnyCoverContainer_Big</ObjectName>
+                    <Layout>horizontal</Layout>
+                    <SizePolicy>f,f</SizePolicy>
+                    <Children>
+                      <SingletonContainer>
+                        <ObjectName>SpinnyCoverart<Variable name="ChanNum"/></ObjectName>
+                      </SingletonContainer>
+                    </Children>
+                  </WidgetGroup>
+                  <WidgetGroup>
+                    <SizePolicy>me,min</SizePolicy>
+                    <Layout>vertical</Layout>
+                    <Children>
+                      <Template src="skins:LateNight/decks/row_2_3_TitleArtistTime.xml"/>
+                      <Template src="skins:VYRE Minimal/decks/overview_row.xml"/>
+                    </Children>
+                  </WidgetGroup>
+                </Children>
+              </WidgetGroup>
+              <Template src="skins:LateNight/decks/row_5_transportLoopJump.xml"/>
+            </Children>
+          </WidgetGroup>
+          <Template src="skins:LateNight/decks/rate_controls.xml"/>
+        </Children>
+      </WidgetGroup>
+    </Children>
+  </WidgetGroup>
+</Template>

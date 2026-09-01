@@ -12,6 +12,7 @@
 class ControlObject;
 class QEvent;
 class QKeyEvent;
+class VyreGlobalKeyFilter;
 
 // This class provides handling of keyboard events.
 class KeyboardEventFilter : public QObject {
@@ -37,6 +38,8 @@ class KeyboardEventFilter : public QObject {
 #endif
 
   private:
+    friend class VyreGlobalKeyFilter;
+
     struct KeyDownInformation {
         KeyDownInformation(int keyId, int modifiers, ControlObject* pControl)
                 : keyId(keyId),
@@ -71,12 +74,14 @@ class KeyboardEventFilter : public QObject {
     QMultiHash<ConfigValueKbd, ConfigKey> m_keySequenceToControlHash;
 
     ControlObject* resolveVyreControl(const ConfigKey& configKey);
+    bool handleVyreGlobalEvent(QObject* obj, QEvent* event);
     void toggleVyrePlay();
     void selectVyreDeck(int deck);
     void selectNextVyreDeck();
 
     int m_vyreActiveDeck{1};
     QSet<int> m_vyreOneShotKeys;
+    std::unique_ptr<VyreGlobalKeyFilter> m_pVyreGlobalKeyFilter;
     std::unique_ptr<ControlObject> m_pVyreActiveDeck;
     std::unique_ptr<ControlObject> m_pVyreDeck1Selected;
     std::unique_ptr<ControlObject> m_pVyreDeck2Selected;

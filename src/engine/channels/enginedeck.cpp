@@ -19,8 +19,30 @@ EngineDeck::EngineDeck(
                   /*isTalkoverChannel*/ false,
                   primaryDeck),
           m_pConfig(pConfig),
+          m_pStemVocals(new ControlPushButton(
+                  ConfigKey(getGroup(), "stem_vocals"))),
+          m_pStemInstrumental(new ControlPushButton(
+                  ConfigKey(getGroup(), "stem_instrumental"))),
           m_pInputConfigured(new ControlObject(ConfigKey(getGroup(), "input_configured"))),
           m_pPassing(new ControlPushButton(ConfigKey(getGroup(), "passthrough"))) {
+    m_pStemVocals->setButtonMode(ControlPushButton::TOGGLE);
+    m_pStemInstrumental->setButtonMode(ControlPushButton::TOGGLE);
+    connect(m_pStemVocals,
+            &ControlObject::valueChanged,
+            this,
+            [this](double value) {
+                if (value > 0.0 && m_pStemInstrumental->toBool()) {
+                    m_pStemInstrumental->set(0.0);
+                }
+            });
+    connect(m_pStemInstrumental,
+            &ControlObject::valueChanged,
+            this,
+            [this](double value) {
+                if (value > 0.0 && m_pStemVocals->toBool()) {
+                    m_pStemVocals->set(0.0);
+                }
+            });
     m_pInputConfigured->setReadOnly();
     // Set up passthrough utilities and fields
     m_pPassing->setButtonMode(ControlPushButton::POWERWINDOW);
@@ -38,6 +60,8 @@ EngineDeck::EngineDeck(
 }
 
 EngineDeck::~EngineDeck() {
+    delete m_pStemInstrumental;
+    delete m_pStemVocals;
     delete m_pPassing;
     delete m_pBuffer;
     delete m_pPregain;
@@ -68,6 +92,11 @@ void EngineDeck::process(CSAMPLE* pOut, const int iBufferSize) {
     // Apply pregain
     m_pPregain->process(pOut, iBufferSize);
 
+    // VYRE Stem Lite uses mid/side separation rather than a neural model. It
+    // is intentionally cheap enough to run inside the audio callback without
+    // analysis jobs, model files, or extra latency.
+    processStemLite(pOut, iBufferSize);
+
     EngineEffectsManager* pEngineEffectsManager = m_pEffectsManager->getEngineEffectsManager();
     if (pEngineEffectsManager != nullptr) {
         pEngineEffectsManager->processPreFaderInPlace(m_group.handle(),
@@ -79,6 +108,45 @@ void EngineDeck::process(CSAMPLE* pOut, const int iBufferSize) {
 
     // Update VU meter
     m_vuMeter.process(pOut, iBufferSize);
+}
+
+void EngineDeck::processStemLite(CSAMPLE* pOutput, int sampleCount) {
+    constexpr int kStereoSamplesPerFrame = 2;
+    const int frameCount = sampleCount / kStereoSamplesPerFrame;
+    if (frameCount <= 0) {
+        return;
+    }
+
+    const CSAMPLE_GAIN vocalTarget = m_pStemVocals->toBool() ? 1.0f : 0.0f;
+    const CSAMPLE_GAIN instrumentalTarget =
+            m_pStemInstrumental->toBool() ? 1.0f : 0.0f;
+    const CSAMPLE_GAIN vocalStep =
+            (vocalTarget - m_stemVocalMix) / frameCount;
+    const CSAMPLE_GAIN instrumentalStep =
+            (instrumentalTarget - m_stemInstrumentalMix) / frameCount;
+
+    for (int frame = 0; frame < frameCount; ++frame) {
+        m_stemVocalMix += vocalStep;
+        m_stemInstrumentalMix += instrumentalStep;
+
+        const int leftIndex = frame * kStereoSamplesPerFrame;
+        const int rightIndex = leftIndex + 1;
+        CSAMPLE left = pOutput[leftIndex];
+        CSAMPLE right = pOutput[rightIndex];
+        const CSAMPLE mid = (left + right) * 0.5f;
+        const CSAMPLE side = (left - right) * 0.5f;
+
+        left += (mid - left) * m_stemVocalMix;
+        right += (mid - right) * m_stemVocalMix;
+        left += (side - left) * m_stemInstrumentalMix;
+        right += (-side - right) * m_stemInstrumentalMix;
+
+        pOutput[leftIndex] = left;
+        pOutput[rightIndex] = right;
+    }
+
+    m_stemVocalMix = vocalTarget;
+    m_stemInstrumentalMix = instrumentalTarget;
 }
 
 void EngineDeck::collectFeatures(GroupFeatureState* pGroupFeatures) const {

@@ -1,11 +1,64 @@
 #include "controllers/keyboard/keyboardeventfilter.h"
 
+#include <QAbstractSpinBox>
+#include <QApplication>
+#include <QComboBox>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QLineEdit>
+#include <QPlainTextEdit>
+#include <QTextEdit>
 #include <QtDebug>
 
 #include "moc_keyboardeventfilter.cpp"
 #include "util/cmdlineargs.h"
+
+namespace {
+
+bool isTextEntryObject(const QObject* object) {
+    for (const QObject* current = object; current; current = current->parent()) {
+        if (qobject_cast<const QLineEdit*>(current) ||
+                qobject_cast<const QTextEdit*>(current) ||
+                qobject_cast<const QPlainTextEdit*>(current) ||
+                qobject_cast<const QAbstractSpinBox*>(current)) {
+            return true;
+        }
+        const auto* comboBox = qobject_cast<const QComboBox*>(current);
+        if (comboBox && comboBox->isEditable()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int physicalKeyId(const QKeyEvent* event) {
+#ifdef __APPLE__
+    return event->key();
+#else
+    return event->nativeScanCode();
+#endif
+}
+
+} // namespace
+
+// The legacy skin parser installs KeyboardEventFilter on individual widgets.
+// A focused Qt control can still consume Space or Tab before that widget-level
+// filter sees it. This narrow application filter reserves only VYRE's selected
+// deck transport and deck-selection mappings, while leaving text entry alone.
+class VyreGlobalKeyFilter final : public QObject {
+  public:
+    explicit VyreGlobalKeyFilter(KeyboardEventFilter* keyboard)
+            : QObject(keyboard), m_pKeyboard(keyboard) {
+    }
+
+  protected:
+    bool eventFilter(QObject* object, QEvent* event) override {
+        return m_pKeyboard->handleVyreGlobalEvent(object, event);
+    }
+
+  private:
+    KeyboardEventFilter* const m_pKeyboard;
+};
 
 KeyboardEventFilter::KeyboardEventFilter(ConfigObject<ConfigValueKbd>* pKbdConfigObject,
         QObject* parent,
@@ -44,11 +97,61 @@ KeyboardEventFilter::KeyboardEventFilter(ConfigObject<ConfigValueKbd>* pKbdConfi
                 } else if (m_vyreActiveDeck == 2) {
                     m_pVyreDeck2Selected->set(1.0);
                 }
-            });
+    });
     setKeyboardConfig(pKbdConfigObject);
+    m_pVyreGlobalKeyFilter = std::make_unique<VyreGlobalKeyFilter>(this);
+    if (auto* application = QCoreApplication::instance()) {
+        application->installEventFilter(m_pVyreGlobalKeyFilter.get());
+    }
 }
 
 KeyboardEventFilter::~KeyboardEventFilter() {
+}
+
+bool KeyboardEventFilter::handleVyreGlobalEvent(QObject* object, QEvent* event) {
+    if (event->type() != QEvent::KeyPress && event->type() != QEvent::KeyRelease) {
+        return false;
+    }
+
+    if (isTextEntryObject(object) || isTextEntryObject(QApplication::focusWidget())) {
+        return false;
+    }
+
+    auto* keyEvent = static_cast<QKeyEvent*>(event);
+    const int keyId = physicalKeyId(keyEvent);
+    if (event->type() == QEvent::KeyRelease) {
+        return m_vyreOneShotKeys.remove(keyId);
+    }
+
+    const QKeySequence sequence = getKeySeq(keyEvent);
+    if (sequence.isEmpty()) {
+        return false;
+    }
+
+    const ConfigValueKbd configuredSequence(sequence);
+    bool handled = false;
+    for (auto it = m_keySequenceToControlHash.constFind(configuredSequence);
+         it != m_keySequenceToControlHash.constEnd() && it.key() == configuredSequence;
+         ++it) {
+        const ConfigKey& configKey = it.value();
+        if (configKey.group == "[VYRE]" && configKey.item == "select") {
+            if (!keyEvent->isAutoRepeat()) {
+                selectNextVyreDeck();
+            }
+            handled = true;
+        } else if (configKey.group == "[VYREActiveDeck]" &&
+                configKey.item == "play_space") {
+            if (!keyEvent->isAutoRepeat()) {
+                toggleVyrePlay();
+            }
+            handled = true;
+        }
+    }
+
+    if (handled) {
+        m_vyreOneShotKeys.insert(keyId);
+    }
+    return handled;
 }
 
 bool KeyboardEventFilter::eventFilter(QObject*, QEvent* e) {
@@ -296,7 +399,10 @@ void KeyboardEventFilter::toggleVyrePlay() {
     const ConfigKey playKey(
             QStringLiteral("[Channel%1]").arg(m_vyreActiveDeck),
             QStringLiteral("play"));
-    ControlObject::set(playKey, ControlObject::toBool(playKey) ? 0.0 : 1.0);
+    const bool wasPlaying = ControlObject::toBool(playKey);
+    ControlObject::set(playKey, wasPlaying ? 0.0 : 1.0);
+    qInfo() << "VYRE Space transport:" << (wasPlaying ? "pause" : "play")
+            << "deck" << m_vyreActiveDeck;
 }
 
 void KeyboardEventFilter::selectNextVyreDeck() {

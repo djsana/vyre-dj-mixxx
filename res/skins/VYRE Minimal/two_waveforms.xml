@@ -1,0 +1,35 @@
+<Template>
+  <WidgetGroup>
+    <ObjectName>VyreWaveforms</ObjectName>
+    <Layout>vertical</Layout>
+    <SizePolicy>me,me</SizePolicy>
+    <Children>
+      <WidgetGroup>
+        <ObjectName>VyreWaveformA</ObjectName>
+        <Layout>horizontal</Layout>
+        <SizePolicy>me,me</SizePolicy>
+        <Children>
+          <Template src="skins:LateNight/waveform.xml">
+            <SetVariable name="ChanNum">1</SetVariable>
+            <SetVariable name="SignalColor"><Variable name="SignalColor_12"/></SetVariable>
+            <SetVariable name="BgColorWaveform"><Variable name="BgColorWaveform_12"/></SetVariable>
+            <SetVariable name="Highlight">[VYRE],deck1_selected</SetVariable>
+          </Template>
+        </Children>
+      </WidgetGroup>
+      <WidgetGroup>
+        <ObjectName>VyreWaveformB</ObjectName>
+        <Layout>horizontal</Layout>
+        <SizePolicy>me,me</SizePolicy>
+        <Children>
+          <Template src="skins:LateNight/waveform.xml">
+            <SetVariable name="ChanNum">2</SetVariable>
+            <SetVariable name="SignalColor"><Variable name="SignalColor_34"/></SetVariable>
+            <SetVariable name="BgColorWaveform"><Variable name="BgColorWaveform_34"/></SetVariable>
+            <SetVariable name="Highlight">[VYRE],deck2_selected</SetVariable>
+          </Template>
+        </Children>
+      </WidgetGroup>
+    </Children>
+  </WidgetGroup>
+</Template>

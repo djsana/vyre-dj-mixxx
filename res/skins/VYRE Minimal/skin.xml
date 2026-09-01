@@ -365,7 +365,7 @@
     <SingletonDefinition>
       <ObjectName>Deck1_Src</ObjectName>
       <Children>
-      <Template src="skins:LateNight/decks/deck.xml">
+      <Template src="skins:VYRE Minimal/decks/deck.xml">
         <SetVariable name="ChanNum">1</SetVariable>
         <SetVariable name="DeckGroup">12</SetVariable>
         <SetVariable name="SignalColor"><Variable name="SignalColor_12"/></SetVariable>
@@ -377,7 +377,7 @@
     <SingletonDefinition>
       <ObjectName>Deck2_Src</ObjectName>
       <Children>
-        <Template src="skins:LateNight/decks/deck.xml">
+        <Template src="skins:VYRE Minimal/decks/deck.xml">
           <SetVariable name="ChanNum">2</SetVariable>
           <SetVariable name="DeckGroup">12</SetVariable>
           <SetVariable name="SignalColor"><Variable name="SignalColor_12"/></SetVariable>
@@ -386,31 +386,7 @@
       </Children>
     </SingletonDefinition>
 
-    <SingletonDefinition>
-      <ObjectName>Deck3_Src</ObjectName>
-      <Children>
-      <Template src="skins:LateNight/decks/deck.xml">
-        <SetVariable name="ChanNum">3</SetVariable>
-        <SetVariable name="DeckGroup">34</SetVariable>
-        <SetVariable name="SignalColor"><Variable name="SignalColor_34"/></SetVariable>
-        <SetVariable name="BgColor"><Variable name="BgColorOverview_34"/></SetVariable>
-      </Template>
-      </Children>
-    </SingletonDefinition>
-
-    <SingletonDefinition>
-      <ObjectName>Deck4_Src</ObjectName>
-      <Children>
-      <Template src="skins:LateNight/decks/deck.xml">
-        <SetVariable name="ChanNum">4</SetVariable>
-        <SetVariable name="DeckGroup">34</SetVariable>
-        <SetVariable name="SignalColor"><Variable name="SignalColor_34"/></SetVariable>
-        <SetVariable name="BgColor"><Variable name="BgColorOverview_34"/></SetVariable>
-      </Template>
-      </Children>
-    </SingletonDefinition>
-
-    <Template src="skins:LateNight/mixer/singletons.xml"/>
+    <Template src="skins:VYRE Minimal/mixer/singletons.xml"/>
 
     <SingletonDefinition>
       <ObjectName>LibrarySingleton</ObjectName>
@@ -432,8 +408,8 @@
       <SizePolicy>me,me</SizePolicy>
       <Children>
 
-        <!-- VYRE Flow uses focus, context and a mix dock instead of the
-             conventional mirrored-deck console. -->
+        <!-- A direct two-deck console: both decks stay visible, the mixer is
+             centered, and performance controls are grouped by deck. -->
         <WidgetGroup>
           <ObjectName>VyreTopBar</ObjectName>
           <Layout>horizontal</Layout>
@@ -446,7 +422,7 @@
             <Label>
               <ObjectName>VyreMode</ObjectName>
               <Size>220f,34f</Size>
-              <Text>FLOWSPACE / WAVEFORM FIRST</Text>
+              <Text>PERFORMANCE CONSOLE</Text>
               <Alignment>left</Alignment>
             </Label>
             <WidgetGroup><Size>me,1min</Size></WidgetGroup>
@@ -514,7 +490,7 @@
                   <ObjectName>VyreWorkspaceSplitter</ObjectName>
                   <Orientation>vertical</Orientation>
                   <SizePolicy>me,min</SizePolicy>
-                  <SplitSizes>132,560</SplitSizes>
+                  <SplitSizes>148,580</SplitSizes>
                   <SplitSizesConfigKey>[VYRE],workspace_split</SplitSizesConfigKey>
                   <Collapsible>0,0</Collapsible>
                   <Children>
@@ -523,7 +499,7 @@
                       <Layout>vertical</Layout>
                       <SizePolicy>me,me</SizePolicy>
                       <Children>
-                        <Template src="skins:LateNight/waveforms_container.xml"/>
+                        <Template src="skins:VYRE Minimal/two_waveforms.xml"/>
                       </Children>
                     </WidgetGroup>
 
@@ -537,44 +513,35 @@
                           <Layout>horizontal</Layout>
                           <SizePolicy>me,min</SizePolicy>
                           <Children>
-                            <WidgetStack currentpage="[VYRE],deck2_selected">
-                              <ObjectName>VyreFocusStage</ObjectName>
+                            <WidgetGroup>
+                              <ObjectName>VyreDeckColumnA</ObjectName>
+                              <Layout>vertical</Layout>
+                              <SizePolicy>me,min</SizePolicy>
                               <Children>
-                                <WidgetGroup>
-                                  <Layout>vertical</Layout>
-                                  <Children>
-                                    <Label><ObjectName>VyreStageLabelA</ObjectName><Text>DECK A / IN FOCUS</Text><Size>me,24f</Size></Label>
-                                    <SingletonContainer><ObjectName>Deck1_Src</ObjectName></SingletonContainer>
-                                  </Children>
-                                </WidgetGroup>
-                                <WidgetGroup>
-                                  <Layout>vertical</Layout>
-                                  <Children>
-                                    <Label><ObjectName>VyreStageLabelB</ObjectName><Text>DECK B / IN FOCUS</Text><Size>me,24f</Size></Label>
-                                    <SingletonContainer><ObjectName>Deck2_Src</ObjectName></SingletonContainer>
-                                  </Children>
-                                </WidgetGroup>
+                                <Label><ObjectName>VyreStageLabelA</ObjectName><Text>DECK A</Text><Size>me,22f</Size></Label>
+                                <SingletonContainer><ObjectName>Deck1_Src</ObjectName></SingletonContainer>
+                                <Template src="skins:VYRE Minimal/performance_pads.xml"><SetVariable name="Group">[Channel1]</SetVariable></Template>
                               </Children>
-                            </WidgetStack>
+                              <Connection><ConfigKey>[VYRE],deck1_selected</ConfigKey><BindProperty>highlight</BindProperty></Connection>
+                            </WidgetGroup>
 
                             <WidgetGroup>
-                              <ObjectName>VyreSideRail</ObjectName>
+                              <ObjectName>VyreMixDock</ObjectName>
                               <Layout>vertical</Layout>
                               <SizePolicy>min,min</SizePolicy>
+                              <Children><Template src="skins:VYRE Minimal/mixer/two_deck.xml"/></Children>
+                            </WidgetGroup>
+
+                            <WidgetGroup>
+                              <ObjectName>VyreDeckColumnB</ObjectName>
+                              <Layout>vertical</Layout>
+                              <SizePolicy>me,min</SizePolicy>
                               <Children>
-                                <Label><ObjectName>VyreRailLabel</ObjectName><Text>OTHER DECK / READY</Text><Size>me,24f</Size></Label>
-                                <WidgetStack currentpage="[VYRE],deck2_selected">
-                                  <Children>
-                                    <WidgetGroup><Layout>horizontal</Layout><Children><SingletonContainer><ObjectName>Deck2_Mini</ObjectName></SingletonContainer></Children></WidgetGroup>
-                                    <WidgetGroup><Layout>horizontal</Layout><Children><SingletonContainer><ObjectName>Deck1_Mini</ObjectName></SingletonContainer></Children></WidgetGroup>
-                                  </Children>
-                                </WidgetStack>
-                                <WidgetGroup>
-                                  <ObjectName>VyreMixDock</ObjectName>
-                                  <Layout>horizontal</Layout>
-                                  <Children><Template src="skins:LateNight/mixer.xml"/></Children>
-                                </WidgetGroup>
+                                <Label><ObjectName>VyreStageLabelB</ObjectName><Text>DECK B</Text><Size>me,22f</Size></Label>
+                                <SingletonContainer><ObjectName>Deck2_Src</ObjectName></SingletonContainer>
+                                <Template src="skins:VYRE Minimal/performance_pads.xml"><SetVariable name="Group">[Channel2]</SetVariable></Template>
                               </Children>
+                              <Connection><ConfigKey>[VYRE],deck2_selected</ConfigKey><BindProperty>highlight</BindProperty></Connection>
                             </WidgetGroup>
                           </Children>
                         </WidgetGroup>

@@ -1,0 +1,14 @@
+<Template>
+  <WidgetGroup>
+    <Layout>vertical</Layout>
+    <MaximumSize>,238</MaximumSize>
+    <Children>
+      <Template src="skins:VYRE Minimal/decks/deck_singletons.xml">
+        <SetVariable name="Group">[Channel<Variable name="ChanNum"/>]</SetVariable>
+      </Template>
+      <SingletonContainer>
+        <ObjectName>Deck<Variable name="ChanNum"/>_Full</ObjectName>
+      </SingletonContainer>
+    </Children>
+  </WidgetGroup>
+</Template>

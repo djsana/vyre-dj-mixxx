@@ -1,139 +1,113 @@
-/* VYRE Flowspace: a waveform-first workspace, not a mirrored console. */
-#SkinContainer {
-  background: #090d12;
-}
+/* VYRE Performance Console: direct, balanced and readable at a glance. */
+#SkinContainer { background: #080c11; }
 
 #VyreTopBar {
-  min-height: 42px;
-  max-height: 42px;
-  padding: 4px 10px;
-  background: #111821;
-  border-bottom: 1px solid #263240;
+  min-height: 44px; max-height: 44px; padding: 4px 12px;
+  background: #cbd5de; border-bottom: 1px solid #8395a5;
 }
+#VyreBrand { image: url(skins:VYRE Minimal/vyre-dj-logo.svg); margin-right: 14px; }
 
-#VyreBrand {
-  image: url(skins:VYRE Minimal/vyre-dj-logo.svg);
-  margin-right: 12px;
+#VyreMode, #VyreFocusCaption, #VyreTabHint, #VyreLibraryModeLabel,
+#VyreStageLabelA, #VyreStageLabelB, #VyreMixerLabel, #VyreStemLabel {
+  color: #8fa0b1; font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans";
+  font-size: 11px; font-weight: 600;
 }
-
-#VyreMode,
-#VyreFocusCaption,
-#VyreTabHint,
-#VyreRailLabel,
-#VyreLibraryModeLabel,
-#VyreStageLabelA,
-#VyreStageLabelB {
-  color: #8494a5;
-  font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans";
-  font-size: 11px;
-  font-weight: 600;
+#VyreStageLabelA, #VyreStageLabelB {
+  padding-left: 10px; background: #c5d0d9; border-bottom: 1px solid #8293a2;
 }
+#VyreStageLabelA { color: #63e6d2; }
+#VyreStageLabelB { color: #aa9eff; }
 
-#VyreStageLabelA {
-  color: #5ee7d3;
-  padding-left: 10px;
-  background: #101922;
-  border-left: 3px solid #42d7c5;
+WPushButton#VyreFocusButton, WPushButton#VyreViewButton, WPushButton#VyreLibraryButton {
+  color: #0b1116; background: #aebdca; border: 1px solid #73889a;
+  border-radius: 5px; border-image: none; image: none; margin: 2px 3px;
+  font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans"; font-weight: 600;
 }
-
-#VyreStageLabelB {
-  color: #a99dff;
-  padding-left: 10px;
-  background: #151525;
-  border-left: 3px solid #8d7cff;
-}
-
-WPushButton#VyreFocusButton,
-WPushButton#VyreViewButton,
-WPushButton#VyreLibraryButton {
-  color: #aab8c6;
-  background: #17212c;
-  border: 1px solid #2b3948;
-  border-radius: 5px;
-  border-image: none;
-  image: none;
-  margin: 2px 3px;
-  font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans";
-  font-weight: 600;
-}
-
-WPushButton#VyreFocusButton:hover,
-WPushButton#VyreViewButton:hover,
+WPushButton#VyreFocusButton:hover, WPushButton#VyreViewButton:hover,
 WPushButton#VyreLibraryButton:hover {
-  color: #edf7ff;
-  background: #202d3a;
-  border-color: #42556a;
+  color: #f4f9fd; background: #22303d; border-color: #506477;
+}
+WPushButton#VyreFocusButton[displayValue="1"] {
+  color: #07110f; background: #63e6d2; border-color: #63e6d2;
 }
 
-WPushButton#VyreFocusButton[value="1"] {
-  color: #071411;
-  background: #5ee7d3;
-  border-color: #5ee7d3;
-}
+#VyreWaveformHorizon { background: #080c11; border-bottom: 1px solid #27333f; padding: 5px 8px; }
+#VyreWaveforms, #VyreWaveformA, #VyreWaveformB { background: #090e13; }
+#VyreWaveformA[highlight="1"] { border-left: 3px solid #42d7c5; }
+#VyreWaveformB[highlight="1"] { border-left: 3px solid #8d7cff; }
 
-WPushButton#VyreFocusButton:pressed,
-WPushButton#VyreViewButton:pressed,
-WPushButton#VyreLibraryButton:pressed {
-  background: #34475a;
+#VyreWorksurface { background: #0a0f15; padding: 7px 8px 6px 8px; }
+#VyrePerformanceRow { background: #0a0f15; }
+#VyreDeckColumnA, #VyreDeckColumnB {
+  background: #10171f; border: 1px solid #27333e; border-radius: 6px;
 }
-
-#VyreWaveformHorizon {
-  background: #080b10;
-  border-bottom: 1px solid #263240;
-  padding: 6px 8px;
-}
-
-#VyreWorksurface {
-  background: #0b1016;
-  padding: 8px;
-}
-
-#VyrePerformanceRow {
-  background: #0b1016;
-}
-
-#VyreFocusStage {
-  background: #101720;
-  border: 1px solid #273443;
-  border-radius: 8px;
-  margin-right: 8px;
-}
-
-#VyreSideRail {
-  min-width: 500px;
-  max-width: 520px;
-  background: #0f151d;
-  border: 1px solid #273443;
-  border-radius: 8px;
-}
-
-#VyreRailLabel,
-#VyreLibraryModeLabel {
-  padding-left: 10px;
-  color: #b3c1ce;
-  background: #151e28;
-  border-bottom: 1px solid #273443;
-}
+#VyreDeckColumnA[highlight="1"] { border: 2px solid #42d7c5; }
+#VyreDeckColumnB[highlight="1"] { border: 2px solid #8d7cff; }
 
 #VyreMixDock {
-  background: #0b1016;
-  border-top: 1px solid #273443;
-  padding-top: 4px;
+  min-width: 250px; max-width: 284px; margin: 0px 7px; padding: 0px 4px;
+  background: #111820; border: 1px solid #2b3743; border-radius: 6px;
 }
+#VyreCenterMixer, #MixerContainer, #MixerDecks { background: #111820; }
+#VyreMixerLabel {
+  color: #0b1116; background: #c5d0d9; border-bottom: 1px solid #8293a2;
+}
+
+#SpinnyCoverContainer_Big {
+  min-width: 166px; max-width: 166px; min-height: 166px; max-height: 166px;
+  margin: 3px 6px 2px 4px;
+}
+#VyreJogShell, #VyreJogWheel {
+  min-width: 160px; max-width: 160px; min-height: 160px; max-height: 160px;
+}
+
+#VyrePads {
+  margin: 4px 5px 5px 5px; padding: 4px; background: #0c1218;
+  border-top: 1px solid #25313c;
+}
+#VyreStemPads { margin-bottom: 3px; }
+#VyreStemLabel {
+  color: #0b1116; background: #aebdca; border: 1px solid #73889a; border-radius: 4px;
+}
+
+#VyrePadLoop, #VyrePadIn, #VyrePadOut, #VyrePadReloop, #VyrePadRoll,
+#VyrePadVocal, #VyrePadInstrumental {
+  color: #0b1116; background-color: #aebdca; border: 1px solid #73889a;
+  border-radius: 4px; border-image: none; margin: 2px; padding-left: 18px;
+  font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans";
+  font-size: 11px; font-weight: 600;
+}
+#VyrePadLoop { image: url(skins:VYRE Minimal/icons/loop.svg); }
+#VyrePadIn { image: url(skins:VYRE Minimal/icons/loop-in.svg); }
+#VyrePadOut { image: url(skins:VYRE Minimal/icons/loop-out.svg); }
+#VyrePadReloop { image: url(skins:VYRE Minimal/icons/reloop.svg); }
+#VyrePadRoll { image: url(skins:VYRE Minimal/icons/roll.svg); }
+#VyrePadVocal { image: url(skins:VYRE Minimal/icons/vocal.svg); }
+#VyrePadInstrumental { image: url(skins:VYRE Minimal/icons/instrumental.svg); }
+
+#VyrePadLoop:hover, #VyrePadIn:hover, #VyrePadOut:hover, #VyrePadReloop:hover,
+#VyrePadRoll:hover, #VyrePadVocal:hover, #VyrePadInstrumental:hover {
+  color: #ffffff; background: #22303c; border-color: #526779;
+}
+#VyrePadLoop[displayValue="1"], #VyrePadIn:pressed, #VyrePadOut:pressed,
+#VyrePadReloop[displayValue="1"], #VyrePadRoll:pressed, #VyrePadVocal[displayValue="1"] {
+  color: #061311; background: #55d8c4; border-color: #72efdc;
+}
+#VyrePadInstrumental[displayValue="1"] {
+  color: #0d0b18; background: #9d91ff; border-color: #bbb3ff;
+}
+
+WPushButton#PlayDeck { image: url(skins:VYRE Minimal/icons/play.svg); }
+WPushButton#CueDeck { image: url(skins:VYRE Minimal/icons/cue.svg); }
+WPushButton#SyncDeck { image: url(skins:VYRE Minimal/icons/sync.svg); }
 
 #VyreEffectShelf {
-  margin-top: 7px;
-  background: #101720;
-  border-top: 1px solid #273443;
-  border-bottom: 1px solid #273443;
+  margin-top: 5px; background: #10171f;
+  border-top: 1px solid #27333e; border-bottom: 1px solid #27333e;
 }
-
-#VyreLibraryMode {
-  background: #0b1016;
-  padding: 10px;
+#VyreLibraryMode { background: #0a0f15; padding: 8px; }
+#VyreLibraryModeLabel {
+  padding-left: 10px; color: #bac7d3; background: #151e27;
+  border-bottom: 1px solid #27333e;
 }
-
-#VyreWorkspaceSplitter::handle {
-  background: #263240;
-  height: 2px;
-}
+#VyreWorkspaceSplitter::handle { background: #2a3743; height: 2px; }

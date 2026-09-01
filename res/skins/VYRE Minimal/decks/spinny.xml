@@ -1,0 +1,20 @@
+<Template>
+  <WidgetGroup>
+    <ObjectName>VyreJogShell</ObjectName>
+    <Layout>horizontal</Layout>
+    <SizePolicy>me,me</SizePolicy>
+    <Children>
+      <Spinny>
+        <TooltipId>spinny</TooltipId>
+        <ObjectName>VyreJogWheel</ObjectName>
+        <SizePolicy>me,me</SizePolicy>
+        <MinimumSize>144,144</MinimumSize>
+        <Group><Variable name="Group"/></Group>
+        <PathBackground scalemode="STRETCH_ASPECT">skins:VYRE Minimal/icons/jog-background.svg</PathBackground>
+        <PathMask scalemode="STRETCH_ASPECT">skins:VYRE Minimal/icons/jog-platter.svg</PathMask>
+        <PathForeground scalemode="STRETCH_ASPECT">skins:VYRE Minimal/icons/jog-marker.svg</PathForeground>
+        <PathGhost scalemode="STRETCH_ASPECT">skins:VYRE Minimal/icons/jog-marker-ghost.svg</PathGhost>
+      </Spinny>
+    </Children>
+  </WidgetGroup>
+</Template>
