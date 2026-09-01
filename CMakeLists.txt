@@ -233,8 +233,8 @@ enable_language(C CXX)
 # Work around missing version suffixes support https://gitlab.kitware.com/cmake/cmake/-/issues/16716
 set(MIXXX_VERSION_PRERELEASE "") # set to "alpha" "beta" or ""
 
-set(CMAKE_PROJECT_HOMEPAGE_URL "https://www.mixxx.org")
-set(CMAKE_PROJECT_DESCRIPTION "Mixxx is Free DJ software that gives you everything you need to perform live mixes.")
+set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/djsana/vyre-dj-mixxx")
+set(CMAKE_PROJECT_DESCRIPTION "VYRE DJ is professional desktop DJ software built on the open-source Mixxx engine.")
 
 # Used for force control of color output
 set(BUILD_COLORS "auto" CACHE STRING "Try to use colors auto/always/no")
@@ -1832,6 +1832,12 @@ endif()
 
 set_target_properties(mixxx-lib PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY}")
 target_link_libraries(mixxx PRIVATE mixxx-lib mixxx-gitinfostore)
+
+# Keep the upstream target name internally to minimize merge conflicts while
+# shipping a clearly distinct VYRE DJ product and executable.
+if(WIN32)
+  set_target_properties(mixxx PROPERTIES OUTPUT_NAME "VYRE DJ")
+endif()
 
 #
 # Installation and Packaging
@@ -3961,19 +3967,19 @@ file(RELATIVE_PATH MIXXX_INSTALL_DOCDIR_RELATIVE_TO_DATADIR "${CMAKE_INSTALL_PRE
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in" "${CMAKE_CURRENT_BINARY_DIR}/src/config.h" @ONLY)
 
 # Packaging
-set(CPACK_PACKAGE_NAME "Mixxx")
-set(CPACK_PACKAGE_VENDOR "Mixxx Project")
-set(CPACK_PACKAGE_CONTACT "RJ Skerry-Ryan <rryan@mixxx.org>")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Digital DJ Application")
+set(CPACK_PACKAGE_NAME "VYRE DJ")
+set(CPACK_PACKAGE_VENDOR "djsana")
+set(CPACK_PACKAGE_CONTACT "djsana")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Professional desktop DJ software")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/packaging/CPackPackageDescription.txt")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "Mixxx")
-set(CPACK_PACKAGE_EXECUTABLES "mixxx;Mixxx")
-set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/res/images/mixxx_install_logo.bmp")
-set(CPACK_PACKAGE_HOMEPAGE_URL "https://www.mixxx.org/")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "VYRE DJ")
+set(CPACK_PACKAGE_EXECUTABLES "VYRE DJ;VYRE DJ")
+set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/res/images/vyre/vyre-dj-icon.png")
+set(CPACK_PACKAGE_HOMEPAGE_URL "https://github.com/djsana/vyre-dj-mixxx")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_STRIP_FILES ON)
-set(CPACK_CREATE_DESKTOP_LINKS "mixxx")
+set(CPACK_CREATE_DESKTOP_LINKS "VYRE DJ")
 set(CPACK_MIXXX_VERSION "${MIXXX_VERSION}")
 # Save GIT values just in case they have been set manual via cmake
 set(CPACK_GIT_DESCRIBE "${GIT_DESCRIBE}")

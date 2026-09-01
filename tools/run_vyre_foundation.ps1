@@ -2,12 +2,12 @@ $ErrorActionPreference = "Stop"
 
 $repositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $buildRoot = Join-Path $repositoryRoot "build\vyre-release"
-$executable = Join-Path $buildRoot "RelWithDebInfo\mixxx.exe"
-$settingsPath = Join-Path $repositoryRoot "build\vyre-settings"
+$executable = Join-Path $buildRoot "RelWithDebInfo\VYRE DJ.exe"
+$settingsPath = Join-Path $env:LOCALAPPDATA "VYRE DJ"
 $resourcePath = Join-Path $repositoryRoot "res"
 
 if (-not (Test-Path -LiteralPath $executable)) {
-    throw "The VYRE Mixxx foundation has not been built at $executable."
+    throw "VYRE DJ has not been built at $executable."
 }
 
 New-Item -ItemType Directory -Path $settingsPath -Force | Out-Null

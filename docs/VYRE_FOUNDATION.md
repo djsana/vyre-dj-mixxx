@@ -1,8 +1,10 @@
-# VYRE DJ Mixxx foundation
+# VYRE DJ source fork
 
-VYRE DJ's second-generation foundation is pinned to Mixxx 2.5.6. The existing
-JUCE VYRE application remains in its original repository while this fork is
-validated and branded.
+VYRE DJ is an independent GPL desktop DJ application forked from the Mixxx
+2.5.6 engine. Upstream target and namespace names are retained internally where
+renaming would make security and audio-engine updates harder to merge, while
+the shipped executable, product metadata, storage, icon, and UI identity belong
+to VYRE DJ.
 
 ## Why this foundation
 
@@ -31,10 +33,10 @@ header compatibility patch:
 Configure from a Visual Studio x64 developer environment with the generated
 vcpkg toolchain, then build the `mixxx` target in `RelWithDebInfo`.
 
-The verified local output is:
+The local development output is:
 
 ```text
-build\vyre-release\RelWithDebInfo\mixxx.exe
+build\vyre-release\RelWithDebInfo\VYRE DJ.exe
 ```
 
 Launch the development build with isolated settings and the correct Qt/resource
@@ -44,5 +46,12 @@ paths:
 & .\tools\run_vyre_foundation.ps1
 ```
 
-The isolated settings directory is `build\vyre-settings`; it does not reuse or
-overwrite another Mixxx installation's library.
+VYRE DJ stores its settings and library under `%LOCALAPPDATA%\VYRE DJ`; it does
+not reuse or overwrite another Mixxx installation's library.
+
+Build and place the runnable package and shortcut on the Windows Desktop with:
+
+```powershell
+& .\tools\build_vyre_windows.ps1
+& .\tools\package_vyre_desktop.ps1
+```

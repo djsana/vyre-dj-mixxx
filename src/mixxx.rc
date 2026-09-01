@@ -1,15 +1,15 @@
-IDI_ICON1               ICON    DISCARDABLE     "res/images/icons/ic_mixxx.ico"
+IDI_ICON1               ICON    DISCARDABLE     "res/images/icons/ic_vyre_dj.ico"
 
 #include <windows.h>
 
 #include "mixxx.rc.include"
 
-#define VER_PRODUCTNAME_STR         "Mixxx\0"
-#define VER_FILEDESCRIPTION_STR     "Mixxx digital DJ software"
-#define VER_COMPANYNAME_STR         "The Mixxx Development Team"
+#define VER_PRODUCTNAME_STR         "VYRE DJ\0"
+#define VER_FILEDESCRIPTION_STR     "VYRE DJ professional desktop DJ software"
+#define VER_COMPANYNAME_STR         "djsana"
 // \xA9 for (c) symbol. The Microsoft Resource Compiler compiler assumes Latin-1 strings
-#define VER_LEGALCOPYRIGHT_STR      "\xA9 2001-" CUR_YEAR " Mixxx Development Team\0"
-#define VER_ORIGINALFILENAME_STR    "Mixxx.exe"
+#define VER_LEGALCOPYRIGHT_STR      "Mixxx contributors; VYRE DJ modifications by djsana\0"
+#define VER_ORIGINALFILENAME_STR    "VYRE DJ.exe"
 
 #if defined(AMD64) || defined(INTEL64) || defined(EM64T) || defined(x86_64)
     #define BITS                    " x64"
