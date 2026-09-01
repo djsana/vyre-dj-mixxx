@@ -109,7 +109,9 @@ KeyboardEventFilter::~KeyboardEventFilter() {
 }
 
 bool KeyboardEventFilter::handleVyreGlobalEvent(QObject* object, QEvent* event) {
-    if (event->type() != QEvent::KeyPress && event->type() != QEvent::KeyRelease) {
+    if (event->type() != QEvent::ShortcutOverride &&
+            event->type() != QEvent::KeyPress &&
+            event->type() != QEvent::KeyRelease) {
         return false;
     }
 
@@ -129,6 +131,29 @@ bool KeyboardEventFilter::handleVyreGlobalEvent(QObject* object, QEvent* event) 
     }
 
     const ConfigValueKbd configuredSequence(sequence);
+    bool isReservedVyreShortcut = false;
+    for (auto it = m_keySequenceToControlHash.constFind(configuredSequence);
+         it != m_keySequenceToControlHash.constEnd() && it.key() == configuredSequence;
+         ++it) {
+        const ConfigKey& configKey = it.value();
+        if ((configKey.group == "[VYRE]" && configKey.item == "select") ||
+                (configKey.group == "[VYREActiveDeck]" &&
+                        configKey.item == "play_space")) {
+            isReservedVyreShortcut = true;
+            break;
+        }
+    }
+
+    // QAction shortcuts are resolved before the normal KeyPress reaches the
+    // focused widget. Accepting ShortcutOverride reserves VYRE's high-frequency
+    // transport keys so a menu action can never resize the workspace instead.
+    if (event->type() == QEvent::ShortcutOverride) {
+        if (isReservedVyreShortcut) {
+            keyEvent->accept();
+        }
+        return isReservedVyreShortcut;
+    }
+
     bool handled = false;
     for (auto it = m_keySequenceToControlHash.constFind(configuredSequence);
          it != m_keySequenceToControlHash.constEnd() && it.key() == configuredSequence;

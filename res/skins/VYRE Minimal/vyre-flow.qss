@@ -3,7 +3,7 @@
 
 #VyreTopBar {
   min-height: 44px; max-height: 44px; padding: 4px 12px;
-  background: #cbd5de; border-bottom: 1px solid #8395a5;
+  background: #101720; border-bottom: 1px solid #263442;
 }
 #VyreBrand { image: url(skins:VYRE Minimal/vyre-dj-logo.svg); margin-right: 14px; }
 
@@ -13,19 +13,23 @@
   font-size: 11px; font-weight: 600;
 }
 #VyreStageLabelA, #VyreStageLabelB {
-  padding-left: 10px; background: #c5d0d9; border-bottom: 1px solid #8293a2;
+  padding-left: 10px; background: #151e28; border-bottom: 1px solid #2a3947;
 }
 #VyreStageLabelA { color: #63e6d2; }
 #VyreStageLabelB { color: #aa9eff; }
 
 WPushButton#VyreFocusButton, WPushButton#VyreViewButton, WPushButton#VyreLibraryButton {
-  color: #0b1116; background: #aebdca; border: 1px solid #73889a;
+  color: #c8d3dc; background: #1a2530; border: 1px solid #344655;
   border-radius: 5px; border-image: none; image: none; margin: 2px 3px;
   font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans"; font-weight: 600;
 }
 WPushButton#VyreFocusButton:hover, WPushButton#VyreViewButton:hover,
 WPushButton#VyreLibraryButton:hover {
-  color: #f4f9fd; background: #22303d; border-color: #506477;
+  color: #ffffff; background: #263644; border-color: #526779;
+}
+WPushButton#VyreFocusButton:pressed, WPushButton#VyreViewButton:pressed,
+WPushButton#VyreLibraryButton:pressed {
+  background: #0e151c; border-color: #63e6d2;
 }
 WPushButton#VyreFocusButton[displayValue="1"] {
   color: #07110f; background: #63e6d2; border-color: #63e6d2;
@@ -50,15 +54,15 @@ WPushButton#VyreFocusButton[displayValue="1"] {
 }
 #VyreCenterMixer, #MixerContainer, #MixerDecks { background: #111820; }
 #VyreMixerLabel {
-  color: #0b1116; background: #c5d0d9; border-bottom: 1px solid #8293a2;
+  color: #dbe6ee; background: #151e28; border-bottom: 1px solid #2a3947;
 }
 
 #SpinnyCoverContainer_Big {
-  min-width: 166px; max-width: 166px; min-height: 166px; max-height: 166px;
+  min-width: 180px; max-width: 180px; min-height: 180px; max-height: 180px;
   margin: 3px 6px 2px 4px;
 }
 #VyreJogShell, #VyreJogWheel {
-  min-width: 160px; max-width: 160px; min-height: 160px; max-height: 160px;
+  min-width: 176px; max-width: 176px; min-height: 176px; max-height: 176px;
 }
 
 #VyrePads {
@@ -67,12 +71,12 @@ WPushButton#VyreFocusButton[displayValue="1"] {
 }
 #VyreStemPads { margin-bottom: 3px; }
 #VyreStemLabel {
-  color: #0b1116; background: #aebdca; border: 1px solid #73889a; border-radius: 4px;
+  color: #90a3b2; background: #121b23; border: 1px solid #2d3e4c; border-radius: 4px;
 }
 
 #VyrePadLoop, #VyrePadIn, #VyrePadOut, #VyrePadReloop, #VyrePadRoll,
 #VyrePadVocal, #VyrePadInstrumental {
-  color: #0b1116; background-color: #aebdca; border: 1px solid #73889a;
+  color: #c9d4dc; background-color: #18232d; border: 1px solid #314451;
   border-radius: 4px; border-image: none; margin: 2px; padding-left: 18px;
   font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans";
   font-size: 11px; font-weight: 600;
@@ -87,7 +91,12 @@ WPushButton#VyreFocusButton[displayValue="1"] {
 
 #VyrePadLoop:hover, #VyrePadIn:hover, #VyrePadOut:hover, #VyrePadReloop:hover,
 #VyrePadRoll:hover, #VyrePadVocal:hover, #VyrePadInstrumental:hover {
-  color: #ffffff; background: #22303c; border-color: #526779;
+  color: #ffffff; background: #263744; border-color: #587083;
+}
+#VyrePadLoop:pressed, #VyrePadIn:pressed, #VyrePadOut:pressed,
+#VyrePadReloop:pressed, #VyrePadRoll:pressed, #VyrePadVocal:pressed,
+#VyrePadInstrumental:pressed {
+  background: #0e161d; border-color: #63e6d2;
 }
 #VyrePadLoop[displayValue="1"], #VyrePadIn:pressed, #VyrePadOut:pressed,
 #VyrePadReloop[displayValue="1"], #VyrePadRoll:pressed, #VyrePadVocal[displayValue="1"] {

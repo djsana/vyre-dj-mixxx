@@ -8,7 +8,7 @@
         <TooltipId>spinny</TooltipId>
         <ObjectName>VyreJogWheel</ObjectName>
         <SizePolicy>me,me</SizePolicy>
-        <MinimumSize>144,144</MinimumSize>
+        <MinimumSize>172,172</MinimumSize>
         <Group><Variable name="Group"/></Group>
         <PathBackground scalemode="STRETCH_ASPECT">skins:VYRE Minimal/icons/jog-background.svg</PathBackground>
         <PathMask scalemode="STRETCH_ASPECT">skins:VYRE Minimal/icons/jog-platter.svg</PathMask>

@@ -473,7 +473,7 @@
               <TooltipId>skin_settings</TooltipId>
               <ObjectName>VyreViewButton</ObjectName>
               <NumberStates>2</NumberStates>
-              <State><Number>0</Number><Text>VIEW</Text></State>
+              <State><Number>0</Number><Text>SETTINGS</Text></State>
               <State><Number>1</Number><Text>CLOSE</Text></State>
               <Connection><ConfigKey>[Skin],show_settings</ConfigKey></Connection>
             </PushButton>
@@ -490,14 +490,15 @@
                   <ObjectName>VyreWorkspaceSplitter</ObjectName>
                   <Orientation>vertical</Orientation>
                   <SizePolicy>me,min</SizePolicy>
-                  <SplitSizes>148,580</SplitSizes>
-                  <SplitSizesConfigKey>[VYRE],workspace_split</SplitSizesConfigKey>
+                  <SplitSizes>168,560</SplitSizes>
                   <Collapsible>0,0</Collapsible>
                   <Children>
                     <WidgetGroup>
                       <ObjectName>VyreWaveformHorizon</ObjectName>
                       <Layout>vertical</Layout>
                       <SizePolicy>me,me</SizePolicy>
+                      <MinimumSize>,132</MinimumSize>
+                      <MaximumSize>,188</MaximumSize>
                       <Children>
                         <Template src="skins:VYRE Minimal/two_waveforms.xml"/>
                       </Children>
@@ -512,6 +513,8 @@
                           <ObjectName>VyrePerformanceRow</ObjectName>
                           <Layout>horizontal</Layout>
                           <SizePolicy>me,min</SizePolicy>
+                          <MinimumSize>,350</MinimumSize>
+                          <MaximumSize>,376</MaximumSize>
                           <Children>
                             <WidgetGroup>
                               <ObjectName>VyreDeckColumnA</ObjectName>

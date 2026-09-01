@@ -337,10 +337,16 @@ void WMainMenuBar::initialize() {
             " " + mayNotBeSupported;
     auto* pViewMaximizeLibrary = new QAction(maximizeLibraryTitle, this);
     pViewMaximizeLibrary->setCheckable(true);
-    pViewMaximizeLibrary->setShortcut(
-        QKeySequence(m_pKbdConfig->getValue(
-                ConfigKey("[KeyboardShortcuts]", "ViewMenu_MaximizeLibrary"),
-                tr("Space", "Menubar|View|Maximize Library"))));
+    QKeySequence maximizeLibraryShortcut(m_pKbdConfig->getValue(
+            ConfigKey("[KeyboardShortcuts]", "ViewMenu_MaximizeLibrary"),
+            tr("Ctrl+Shift+L", "Menubar|View|Maximize Library")));
+    const QKeySequence vyreTransportShortcut(m_pKbdConfig->getValue(
+            ConfigKey("[VYREActiveDeck]", "play_space"),
+            QStringLiteral("Space")));
+    if (maximizeLibraryShortcut == vyreTransportShortcut) {
+        maximizeLibraryShortcut = QKeySequence(QStringLiteral("Ctrl+Shift+L"));
+    }
+    pViewMaximizeLibrary->setShortcut(maximizeLibraryShortcut);
     pViewMaximizeLibrary->setStatusTip(maximizeLibraryText);
     pViewMaximizeLibrary->setWhatsThis(buildWhatsThis(maximizeLibraryTitle, maximizeLibraryText));
     createVisibilityControl(pViewMaximizeLibrary,
