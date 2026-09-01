@@ -2,6 +2,7 @@
 
 #include <QMultiHash>
 #include <QObject>
+#include <QSet>
 
 #include <memory>
 
@@ -70,9 +71,12 @@ class KeyboardEventFilter : public QObject {
     QMultiHash<ConfigValueKbd, ConfigKey> m_keySequenceToControlHash;
 
     ControlObject* resolveVyreControl(const ConfigKey& configKey);
+    void toggleVyrePlay();
+    void selectVyreDeck(int deck);
     void selectNextVyreDeck();
 
     int m_vyreActiveDeck{1};
+    QSet<int> m_vyreOneShotKeys;
     std::unique_ptr<ControlObject> m_pVyreActiveDeck;
     std::unique_ptr<ControlObject> m_pVyreDeck1Selected;
     std::unique_ptr<ControlObject> m_pVyreDeck2Selected;

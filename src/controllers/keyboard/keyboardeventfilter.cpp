@@ -25,6 +25,26 @@ KeyboardEventFilter::KeyboardEventFilter(ConfigObject<ConfigValueKbd>* pKbdConfi
     m_pVyreActiveDeck->set(1.0);
     m_pVyreDeck1Selected->set(1.0);
     m_pVyreDeck2Selected->set(0.0);
+    connect(m_pVyreDeck1Selected.get(),
+            &ControlObject::valueChanged,
+            this,
+            [this](double value) {
+                if (value > 0.0) {
+                    selectVyreDeck(1);
+                } else if (m_vyreActiveDeck == 1) {
+                    m_pVyreDeck1Selected->set(1.0);
+                }
+            });
+    connect(m_pVyreDeck2Selected.get(),
+            &ControlObject::valueChanged,
+            this,
+            [this](double value) {
+                if (value > 0.0) {
+                    selectVyreDeck(2);
+                } else if (m_vyreActiveDeck == 2) {
+                    m_pVyreDeck2Selected->set(1.0);
+                }
+            });
     setKeyboardConfig(pKbdConfigObject);
 }
 
@@ -36,6 +56,7 @@ bool KeyboardEventFilter::eventFilter(QObject*, QEvent* e) {
         // If we lose focus, we need to clear out the active key list
         // because we might not get Key Release events.
         m_qActiveKeyList.clear();
+        m_vyreOneShotKeys.clear();
     } else if (e->type() == QEvent::KeyPress) {
         QKeyEvent* ke = (QKeyEvent *)e;
 
@@ -68,6 +89,21 @@ bool KeyboardEventFilter::eventFilter(QObject*, QEvent* e) {
                     if (configKey.group == "[VYRE]" && configKey.item == "select") {
                         if (!ke->isAutoRepeat()) {
                             selectNextVyreDeck();
+                        }
+                        result = true;
+                        continue;
+                    }
+
+                    if (configKey.group == "[VYREActiveDeck]" &&
+                            configKey.item == "play_space") {
+                        // Transport is a one-shot action in VYRE. Do not route
+                        // it through the generic MIDI NoteOn/NoteOff path: a
+                        // held Space key may auto-repeat and its release may
+                        // otherwise activate the widget that currently has
+                        // keyboard focus.
+                        m_vyreOneShotKeys.insert(keyId);
+                        if (!ke->isAutoRepeat()) {
+                            toggleVyrePlay();
                         }
                         result = true;
                         continue;
@@ -123,6 +159,9 @@ bool KeyboardEventFilter::eventFilter(QObject*, QEvent* e) {
 #else
         int keyId = ke->nativeScanCode();
 #endif
+        if (m_vyreOneShotKeys.remove(keyId)) {
+            return true;
+        }
         bool autoRepeat = ke->isAutoRepeat();
 
         //qDebug() << "KeyRelease event =" << ke->key() << "AutoRepeat =" << autoRepeat << "KeyId =" << keyId;
@@ -250,13 +289,25 @@ ControlObject* KeyboardEventFilter::resolveVyreControl(const ConfigKey& configKe
                 QStringLiteral("enabled")));
     }
 
-    const QString controlItem =
-            configKey.item == "play_space" ? QStringLiteral("play") : configKey.item;
-    return ControlObject::getControl(ConfigKey(channelGroup, controlItem));
+    return ControlObject::getControl(ConfigKey(channelGroup, configKey.item));
+}
+
+void KeyboardEventFilter::toggleVyrePlay() {
+    const ConfigKey playKey(
+            QStringLiteral("[Channel%1]").arg(m_vyreActiveDeck),
+            QStringLiteral("play"));
+    ControlObject::set(playKey, ControlObject::toBool(playKey) ? 0.0 : 1.0);
 }
 
 void KeyboardEventFilter::selectNextVyreDeck() {
-    m_vyreActiveDeck = m_vyreActiveDeck == 1 ? 2 : 1;
+    selectVyreDeck(m_vyreActiveDeck == 1 ? 2 : 1);
+}
+
+void KeyboardEventFilter::selectVyreDeck(int deck) {
+    if (deck != 1 && deck != 2) {
+        return;
+    }
+    m_vyreActiveDeck = deck;
     m_pVyreActiveDeck->set(static_cast<double>(m_vyreActiveDeck));
     m_pVyreDeck1Selected->set(m_vyreActiveDeck == 1 ? 1.0 : 0.0);
     m_pVyreDeck2Selected->set(m_vyreActiveDeck == 2 ? 1.0 : 0.0);

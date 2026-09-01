@@ -1,0 +1,139 @@
+/* VYRE Flowspace: a waveform-first workspace, not a mirrored console. */
+#SkinContainer {
+  background: #090d12;
+}
+
+#VyreTopBar {
+  min-height: 42px;
+  max-height: 42px;
+  padding: 4px 10px;
+  background: #111821;
+  border-bottom: 1px solid #263240;
+}
+
+#VyreBrand {
+  image: url(skins:VYRE Minimal/vyre-dj-logo.svg);
+  margin-right: 12px;
+}
+
+#VyreMode,
+#VyreFocusCaption,
+#VyreTabHint,
+#VyreRailLabel,
+#VyreLibraryModeLabel,
+#VyreStageLabelA,
+#VyreStageLabelB {
+  color: #8494a5;
+  font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans";
+  font-size: 11px;
+  font-weight: 600;
+}
+
+#VyreStageLabelA {
+  color: #5ee7d3;
+  padding-left: 10px;
+  background: #101922;
+  border-left: 3px solid #42d7c5;
+}
+
+#VyreStageLabelB {
+  color: #a99dff;
+  padding-left: 10px;
+  background: #151525;
+  border-left: 3px solid #8d7cff;
+}
+
+WPushButton#VyreFocusButton,
+WPushButton#VyreViewButton,
+WPushButton#VyreLibraryButton {
+  color: #aab8c6;
+  background: #17212c;
+  border: 1px solid #2b3948;
+  border-radius: 5px;
+  border-image: none;
+  image: none;
+  margin: 2px 3px;
+  font-family: "Segoe UI Semibold", "Open Sans Semibold", "Open Sans";
+  font-weight: 600;
+}
+
+WPushButton#VyreFocusButton:hover,
+WPushButton#VyreViewButton:hover,
+WPushButton#VyreLibraryButton:hover {
+  color: #edf7ff;
+  background: #202d3a;
+  border-color: #42556a;
+}
+
+WPushButton#VyreFocusButton[value="1"] {
+  color: #071411;
+  background: #5ee7d3;
+  border-color: #5ee7d3;
+}
+
+WPushButton#VyreFocusButton:pressed,
+WPushButton#VyreViewButton:pressed,
+WPushButton#VyreLibraryButton:pressed {
+  background: #34475a;
+}
+
+#VyreWaveformHorizon {
+  background: #080b10;
+  border-bottom: 1px solid #263240;
+  padding: 6px 8px;
+}
+
+#VyreWorksurface {
+  background: #0b1016;
+  padding: 8px;
+}
+
+#VyrePerformanceRow {
+  background: #0b1016;
+}
+
+#VyreFocusStage {
+  background: #101720;
+  border: 1px solid #273443;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+#VyreSideRail {
+  min-width: 500px;
+  max-width: 520px;
+  background: #0f151d;
+  border: 1px solid #273443;
+  border-radius: 8px;
+}
+
+#VyreRailLabel,
+#VyreLibraryModeLabel {
+  padding-left: 10px;
+  color: #b3c1ce;
+  background: #151e28;
+  border-bottom: 1px solid #273443;
+}
+
+#VyreMixDock {
+  background: #0b1016;
+  border-top: 1px solid #273443;
+  padding-top: 4px;
+}
+
+#VyreEffectShelf {
+  margin-top: 7px;
+  background: #101720;
+  border-top: 1px solid #273443;
+  border-bottom: 1px solid #273443;
+}
+
+#VyreLibraryMode {
+  background: #0b1016;
+  padding: 10px;
+}
+
+#VyreWorkspaceSplitter::handle {
+  background: #263240;
+  height: 2px;
+}
