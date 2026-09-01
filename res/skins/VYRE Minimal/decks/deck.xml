@@ -1,7 +1,8 @@
 <Template>
   <WidgetGroup>
     <Layout>vertical</Layout>
-    <MaximumSize>,244</MaximumSize>
+    <MinimumSize>,220</MinimumSize>
+    <MaximumSize>,232</MaximumSize>
     <Children>
       <Template src="skins:VYRE Minimal/decks/deck_singletons.xml">
         <SetVariable name="Group">[Channel<Variable name="ChanNum"/>]</SetVariable>

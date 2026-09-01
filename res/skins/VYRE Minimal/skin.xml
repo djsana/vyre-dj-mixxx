@@ -513,8 +513,8 @@
                           <ObjectName>VyrePerformanceRow</ObjectName>
                           <Layout>horizontal</Layout>
                           <SizePolicy>me,min</SizePolicy>
-                          <MinimumSize>,350</MinimumSize>
-                          <MaximumSize>,376</MaximumSize>
+                          <MinimumSize>,382</MinimumSize>
+                          <MaximumSize>,406</MaximumSize>
                           <Children>
                             <WidgetGroup>
                               <ObjectName>VyreDeckColumnA</ObjectName>

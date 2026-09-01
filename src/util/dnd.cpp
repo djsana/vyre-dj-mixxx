@@ -65,6 +65,25 @@ QList<mixxx::FileInfo> dropEventFiles(
             acceptPlaylists);
 }
 
+void selectVyreDeckForDrop(const QString& group) {
+    int deckNumber = 0;
+    if (!PlayerManager::isDeckGroup(group, &deckNumber) ||
+            (deckNumber != 1 && deckNumber != 2)) {
+        return;
+    }
+
+    ControlObject::set(
+            ConfigKey(QStringLiteral("[VYRE]"), QStringLiteral("active_deck")),
+            deckNumber);
+    ControlObject::set(
+            ConfigKey(QStringLiteral("[VYRE]"), QStringLiteral("deck1_selected")),
+            deckNumber == 1 ? 1.0 : 0.0);
+    ControlObject::set(
+            ConfigKey(QStringLiteral("[VYRE]"), QStringLiteral("deck2_selected")),
+            deckNumber == 2 ? 1.0 : 0.0);
+    qInfo() << "VYRE drag-and-drop selected deck" << deckNumber;
+}
+
 // Allow loading to a player if the player isn't playing
 // or the settings allow interrupting a playing player.
 bool allowLoadToPlayer(
@@ -278,6 +297,7 @@ void DragAndDropHelper::handleTrackDropEvent(
         if (allowDeckCloneAttempt(*pEvent, group)) {
             pEvent->accept();
             target.emitCloneDeck(pEvent->mimeData()->text(), group);
+            selectVyreDeckForDrop(group);
             return;
         } else {
             const QList<mixxx::FileInfo> files = dropEventFiles(
@@ -285,6 +305,7 @@ void DragAndDropHelper::handleTrackDropEvent(
             if (!files.isEmpty()) {
                 pEvent->accept();
                 target.emitTrackDropped(files.at(0).location(), group);
+                selectVyreDeckForDrop(group);
                 return;
             }
         }

@@ -38,11 +38,13 @@
                     <Children>
                       <Template src="skins:LateNight/decks/row_2_3_TitleArtistTime.xml"/>
                       <Template src="skins:VYRE Minimal/decks/overview_row.xml"/>
+                      <Template src="skins:VYRE Minimal/decks/transport.xml">
+                        <SetVariable name="Group">[Channel<Variable name="ChanNum"/>]</SetVariable>
+                      </Template>
                     </Children>
                   </WidgetGroup>
                 </Children>
               </WidgetGroup>
-              <Template src="skins:LateNight/decks/row_5_transportLoopJump.xml"/>
             </Children>
           </WidgetGroup>
           <Template src="skins:LateNight/decks/rate_controls.xml"/>

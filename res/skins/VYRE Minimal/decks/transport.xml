@@ -1,0 +1,71 @@
+<Template>
+  <WidgetGroup>
+    <ObjectName>VyreTransport</ObjectName>
+    <Layout>horizontal</Layout>
+    <SizePolicy>me,min</SizePolicy>
+    <MinimumSize>,48</MinimumSize>
+    <MaximumSize>,48</MaximumSize>
+    <Children>
+      <PushButton>
+        <TooltipId>cue_default_cue_gotoandstop</TooltipId>
+        <ObjectName>VyreTransportCue</ObjectName>
+        <MinimumSize>60,44</MinimumSize>
+        <SizePolicy>me,f</SizePolicy>
+        <NumberStates>1</NumberStates>
+        <RightClickIsPushButton>true</RightClickIsPushButton>
+        <State><Number>0</Number><Text>CUE</Text><Alignment>center</Alignment></State>
+        <Connection>
+          <ConfigKey><Variable name="Group"/>,cue_default</ConfigKey>
+          <ButtonState>LeftButton</ButtonState>
+        </Connection>
+        <Connection>
+          <ConfigKey><Variable name="Group"/>,cue_gotoandstop</ConfigKey>
+          <ButtonState>RightButton</ButtonState>
+        </Connection>
+      </PushButton>
+
+      <PushButton>
+        <TooltipId>play_cue_set</TooltipId>
+        <ObjectName>VyreTransportPlay</ObjectName>
+        <MinimumSize>80,44</MinimumSize>
+        <SizePolicy>me,f</SizePolicy>
+        <NumberStates>2</NumberStates>
+        <RightClickIsPushButton>true</RightClickIsPushButton>
+        <State><Number>0</Number><Text>PLAY</Text><Alignment>center</Alignment></State>
+        <State><Number>1</Number><Text>PAUSE</Text><Alignment>center</Alignment></State>
+        <Connection>
+          <ConfigKey><Variable name="Group"/>,play</ConfigKey>
+          <ButtonState>LeftButton</ButtonState>
+        </Connection>
+        <Connection>
+          <ConfigKey><Variable name="Group"/>,cue_set</ConfigKey>
+          <ButtonState>RightButton</ButtonState>
+        </Connection>
+        <Connection>
+          <ConfigKey><Variable name="Group"/>,play_latched</ConfigKey>
+          <ConnectValueFromWidget>false</ConnectValueFromWidget>
+        </Connection>
+      </PushButton>
+
+      <PushButton>
+        <TooltipId>sync_enabled</TooltipId>
+        <ObjectName>VyreTransportSync</ObjectName>
+        <MinimumSize>60,44</MinimumSize>
+        <SizePolicy>me,f</SizePolicy>
+        <NumberStates>2</NumberStates>
+        <RightClickIsPushButton>true</RightClickIsPushButton>
+        <State><Number>0</Number><Text>SYNC</Text><Alignment>center</Alignment></State>
+        <State><Number>1</Number><Text>SYNC ON</Text><Alignment>center</Alignment></State>
+        <Connection>
+          <ConfigKey><Variable name="Group"/>,sync_enabled</ConfigKey>
+          <ButtonState>LeftButton</ButtonState>
+        </Connection>
+        <Connection>
+          <ConfigKey><Variable name="Group"/>,sync_leader</ConfigKey>
+          <ButtonState>RightButton</ButtonState>
+        </Connection>
+      </PushButton>
+
+    </Children>
+  </WidgetGroup>
+</Template>
