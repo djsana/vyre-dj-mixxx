@@ -352,11 +352,11 @@ CoreServices::CoreServices(const CmdlineArgs& args, QApplication* pApp)
     }
     const auto pSettings = m_pSettingsManager->settings();
     const ConfigKey localeKey(QStringLiteral("[Config]"), QStringLiteral("Locale"));
-    if (!pSettings->exists(localeKey)) {
+    if (pSettings->getValue(localeKey, QString()).trimmed().isEmpty()) {
         // VYRE DJ ships in English by default, even when Windows reports a
         // different input-method locale. Users can still choose another
         // language explicitly in Preferences.
-        pSettings->setValue(localeKey, QStringLiteral("en"));
+        pSettings->setValue(localeKey, QStringLiteral("en_US"));
     }
     mixxx::Translations::initializeTranslations(
             pSettings, pApp, m_cmdlineArgs.getLocale());

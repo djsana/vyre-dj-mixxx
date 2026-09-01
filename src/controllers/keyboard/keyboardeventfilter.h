@@ -3,6 +3,8 @@
 #include <QMultiHash>
 #include <QObject>
 
+#include <memory>
+
 #include "control/controlobject.h"
 #include "preferences/configobject.h"
 
@@ -66,4 +68,12 @@ class KeyboardEventFilter : public QObject {
     ConfigObject<ConfigValueKbd> *m_pKbdConfigObject;
     // Multi-hash of key sequence to
     QMultiHash<ConfigValueKbd, ConfigKey> m_keySequenceToControlHash;
+
+    ControlObject* resolveVyreControl(const ConfigKey& configKey);
+    void selectNextVyreDeck();
+
+    int m_vyreActiveDeck{1};
+    std::unique_ptr<ControlObject> m_pVyreActiveDeck;
+    std::unique_ptr<ControlObject> m_pVyreDeck1Selected;
+    std::unique_ptr<ControlObject> m_pVyreDeck2Selected;
 };

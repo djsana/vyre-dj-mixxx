@@ -2497,7 +2497,7 @@ WPushButton#PlayDeck[value="0"] {
   }
 
 #ToolbarLogo {
-  image: url(skins:LateNight/palemoon/style/mixxx_logo_small.svg) no-repeat center center;
+  image: url(skins:VYRE Minimal/vyre-dj-logo.svg) no-repeat center center;
 }
 
 /* Search bar Clear button */

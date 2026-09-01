@@ -35,7 +35,7 @@ DlgAbout::DlgAbout()
     }
 
     QString s_devTeam =
-            tr("Mixxx %1.%2 Development Team")
+            tr("VYRE DJ, powered by the Mixxx %1.%2 engine")
                     .arg(QString::number(
                                  VersionStore::versionNumber().majorVersion()),
                             QString::number(VersionStore::versionNumber()

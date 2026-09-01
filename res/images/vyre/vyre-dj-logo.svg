@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="136" viewBox="0 0 340 136">
+  <defs>
+    <linearGradient id="g" x1="18" y1="20" x2="116" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#42d7c5"/>
+      <stop offset="1" stop-color="#8d7cff"/>
+    </linearGradient>
+  </defs>
+  <rect x="10" y="10" width="116" height="116" rx="28" fill="#0e1214"/>
+  <circle cx="68" cy="68" r="40" fill="none" stroke="url(#g)" stroke-width="7"/>
+  <path d="M42 43l26 55 26-55H81L68 73 55 43z" fill="url(#g)"/>
+  <circle cx="68" cy="68" r="5" fill="#eafffc"/>
+  <text x="145" y="74" fill="#f2f7f6" font-family="Segoe UI,Arial,sans-serif" font-size="48" font-weight="700" letter-spacing="4">VYRE</text>
+  <text x="148" y="102" fill="#42d7c5" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="600" letter-spacing="8">DJ</text>
+</svg>

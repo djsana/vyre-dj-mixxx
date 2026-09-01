@@ -9,8 +9,8 @@
     "." TO_STR(minor)
 
 // Icons used for the main window and dialogs
-#define MIXXX_ICON_PATH ":/images/icons/scalable/apps/mixxx.svg"
-#define MIXXX_LOGO_PATH ":/images/mixxx_logo.svg"
+#define MIXXX_ICON_PATH ":/images/vyre/vyre-dj-mark.svg"
+#define MIXXX_LOGO_PATH ":/images/vyre/vyre-dj-logo.svg"
 
 #define MIXXX_WEBSITE_URL       "https://www.mixxx.org"
 #define MIXXX_WEBSITE_SHORT_URL "www.mixxx.org"

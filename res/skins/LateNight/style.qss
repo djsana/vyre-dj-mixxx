@@ -398,6 +398,19 @@ WOverview QLabel {
     }
   #LatencyLabel {
   }
+  #VyreDeckSelect {
+    qproperty-alignment: 'AlignCenter';
+    border: 1px solid #3b464b;
+    border-radius: 4px;
+    color: #77858b;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  #VyreDeckSelect[highlight="1"] {
+    background-color: #183b39;
+    border-color: #42d7c5;
+    color: #d8fffa;
+  }
 /************** ToolBar *******************************************************/
 
 

@@ -14,8 +14,17 @@ KeyboardEventFilter::KeyboardEventFilter(ConfigObject<ConfigValueKbd>* pKbdConfi
 #ifndef __APPLE__
           m_altPressedWithoutKey(false),
 #endif
-          m_pKbdConfigObject(nullptr) {
+          m_pKbdConfigObject(nullptr),
+          m_pVyreActiveDeck(std::make_unique<ControlObject>(
+                  ConfigKey(QStringLiteral("[VYRE]"), QStringLiteral("active_deck")))),
+          m_pVyreDeck1Selected(std::make_unique<ControlObject>(
+                  ConfigKey(QStringLiteral("[VYRE]"), QStringLiteral("deck1_selected")))),
+          m_pVyreDeck2Selected(std::make_unique<ControlObject>(
+                  ConfigKey(QStringLiteral("[VYRE]"), QStringLiteral("deck2_selected")))) {
     setObjectName(name);
+    m_pVyreActiveDeck->set(1.0);
+    m_pVyreDeck1Selected->set(1.0);
+    m_pVyreDeck2Selected->set(0.0);
     setKeyboardConfig(pKbdConfigObject);
 }
 
@@ -56,7 +65,15 @@ bool KeyboardEventFilter::eventFilter(QObject*, QEvent* e) {
                  it != m_keySequenceToControlHash.constEnd() && it.key() == ksv; ++it) {
                 const ConfigKey& configKey = it.value();
                 if (configKey.group != "[KeyboardShortcuts]") {
-                    ControlObject* control = ControlObject::getControl(configKey);
+                    if (configKey.group == "[VYRE]" && configKey.item == "select") {
+                        if (!ke->isAutoRepeat()) {
+                            selectNextVyreDeck();
+                        }
+                        result = true;
+                        continue;
+                    }
+
+                    ControlObject* control = resolveVyreControl(configKey);
                     if (control) {
                         //qDebug() << configKey << "MidiOpCode::NoteOn" << 1;
                         // Add key to active key list
@@ -199,4 +216,49 @@ void KeyboardEventFilter::setKeyboardConfig(ConfigObject<ConfigValueKbd>* pKbdCo
 
 ConfigObject<ConfigValueKbd>* KeyboardEventFilter::getKeyboardConfig() {
     return m_pKbdConfigObject;
+}
+
+ControlObject* KeyboardEventFilter::resolveVyreControl(const ConfigKey& configKey) {
+    if (configKey.group != "[VYREActiveDeck]") {
+        return ControlObject::getControl(configKey);
+    }
+
+    const QString channelGroup = QStringLiteral("[Channel%1]").arg(m_vyreActiveDeck);
+
+    if (configKey.item == "filter_activate") {
+        return ControlObject::getControl(ConfigKey(
+                QStringLiteral("[QuickEffectRack1_%1_Effect1]").arg(channelGroup),
+                QStringLiteral("enabled")));
+    }
+
+    if (configKey.item.startsWith(QStringLiteral("effect_active_"))) {
+        bool ok = false;
+        const int effectSlot = configKey.item.sliced(14).toInt(&ok);
+        if (!ok || effectSlot < 1 || effectSlot > 3) {
+            return nullptr;
+        }
+
+        const QString effectUnitGroup =
+                QStringLiteral("[EffectRack1_EffectUnit%1]").arg(m_vyreActiveDeck);
+        ControlObject::set(ConfigKey(effectUnitGroup,
+                                   QStringLiteral("group_%1_enable").arg(channelGroup)),
+                1.0);
+        return ControlObject::getControl(ConfigKey(
+                QStringLiteral("[EffectRack1_EffectUnit%1_Effect%2]")
+                        .arg(m_vyreActiveDeck)
+                        .arg(effectSlot),
+                QStringLiteral("enabled")));
+    }
+
+    const QString controlItem =
+            configKey.item == "play_space" ? QStringLiteral("play") : configKey.item;
+    return ControlObject::getControl(ConfigKey(channelGroup, controlItem));
+}
+
+void KeyboardEventFilter::selectNextVyreDeck() {
+    m_vyreActiveDeck = m_vyreActiveDeck == 1 ? 2 : 1;
+    m_pVyreActiveDeck->set(static_cast<double>(m_vyreActiveDeck));
+    m_pVyreDeck1Selected->set(m_vyreActiveDeck == 1 ? 1.0 : 0.0);
+    m_pVyreDeck2Selected->set(m_vyreActiveDeck == 2 ? 1.0 : 0.0);
+    qInfo() << "VYRE keyboard deck selected:" << m_vyreActiveDeck;
 }

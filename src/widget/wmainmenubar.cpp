@@ -121,7 +121,7 @@ void WMainMenuBar::initialize() {
     pFileMenu->addSeparator();
 
     QString quitTitle = tr("&Exit");
-    QString quitText = tr("Quits Mixxx");
+    QString quitText = tr("Quits VYRE DJ");
     auto* pFileQuit = new QAction(quitTitle, this);
     pFileQuit->setShortcut(
         QKeySequence(m_pKbdConfig->getValue(ConfigKey("[KeyboardShortcuts]", "FileMenu_Quit"),
@@ -254,7 +254,7 @@ void WMainMenuBar::initialize() {
 
     // Microphone Section
     QString showMicrophoneTitle = tr("Show Microphone Section");
-    QString showMicrophoneText = tr("Show the microphone section of the Mixxx interface.") +
+    QString showMicrophoneText = tr("Show the microphone section of the VYRE DJ interface.") +
             " " + mayNotBeSupported;
     auto* pViewShowMicrophone = new QAction(showMicrophoneTitle, this);
     pViewShowMicrophone->setCheckable(true);
@@ -270,7 +270,7 @@ void WMainMenuBar::initialize() {
 
 #ifdef __VINYLCONTROL__
     QString showVinylControlTitle = tr("Show Vinyl Control Section");
-    QString showVinylControlText = tr("Show the vinyl control section of the Mixxx interface.") +
+    QString showVinylControlText = tr("Show the vinyl control section of the VYRE DJ interface.") +
             " " + mayNotBeSupported;
     auto* pViewVinylControl = new QAction(showVinylControlTitle, this);
     pViewVinylControl->setCheckable(true);
@@ -286,7 +286,7 @@ void WMainMenuBar::initialize() {
 #endif
 
     QString showPreviewDeckTitle = tr("Show Preview Deck");
-    QString showPreviewDeckText = tr("Show the preview deck in the Mixxx interface.") +
+    QString showPreviewDeckText = tr("Show the preview deck in the VYRE DJ interface.") +
             " " + mayNotBeSupported;
     auto* pViewShowPreviewDeck = new QAction(showPreviewDeckTitle, this);
     pViewShowPreviewDeck->setCheckable(true);
@@ -302,7 +302,7 @@ void WMainMenuBar::initialize() {
 
 
     QString showCoverArtTitle = tr("Show Cover Art");
-    QString showCoverArtText = tr("Show cover art in the Mixxx interface.") +
+    QString showCoverArtText = tr("Show cover art in the VYRE DJ interface.") +
             " " + mayNotBeSupported;
     auto* pViewShowCoverArt = new QAction(showCoverArtTitle, this);
     pViewShowCoverArt->setCheckable(true);
@@ -350,7 +350,7 @@ void WMainMenuBar::initialize() {
     pViewMenu->addSeparator();
 
     QString fullScreenTitle = tr("&Full Screen");
-    QString fullScreenText = tr("Display Mixxx using the full screen");
+    QString fullScreenText = tr("Display VYRE DJ using the full screen");
     auto* pViewFullScreen = new QAction(fullScreenTitle, this);
     QList<QKeySequence> shortcuts;
     // We use F11 _AND_ the OS shortcut only on Linux and Windows because on
@@ -491,7 +491,7 @@ void WMainMenuBar::initialize() {
     pOptionsMenu->addSeparator();
 
     QString preferencesTitle = tr("&Preferences");
-    QString preferencesText = tr("Change Mixxx settings (e.g. playback, MIDI, controls)");
+    QString preferencesText = tr("Change VYRE DJ settings (e.g. playback, MIDI, controls)");
     auto* pOptionsPreferences = new QAction(preferencesTitle, this);
     pOptionsPreferences->setShortcut(
         QKeySequence(m_pKbdConfig->getValue(
@@ -627,7 +627,7 @@ void WMainMenuBar::initialize() {
 
     // Community Support
     QString supportTitle = tr("&Community Support") + externalLinkSuffix;
-    QString supportText = tr("Get help with Mixxx");
+    QString supportText = tr("Get help with VYRE DJ");
     auto* pHelpSupport = new QAction(supportTitle, this);
     pHelpSupport->setStatusTip(supportText);
     pHelpSupport->setWhatsThis(buildWhatsThis(supportTitle, supportText));
@@ -675,7 +675,7 @@ void WMainMenuBar::initialize() {
     // User Settings Directory
     const QString& settingsDirPath = m_pConfig->getSettingsPath();
     QString settingsDirTitle = tr("&Settings directory");
-    QString settingsDirText = tr("Open the Mixxx user settings directory.");
+    QString settingsDirText = tr("Open the VYRE DJ user settings directory.");
     auto* pHelpSettingsDir = new QAction(settingsDirTitle, this);
     pHelpSettingsDir->setMenuRole(QAction::NoRole);
     pHelpSettingsDir->setStatusTip(settingsDirText);

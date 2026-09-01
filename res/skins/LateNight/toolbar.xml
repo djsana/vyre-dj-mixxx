@@ -307,6 +307,28 @@
       <WidgetGroup><Size>7f,min</Size></WidgetGroup>
 
       <Label>
+        <ObjectName>VyreDeckSelect</ObjectName>
+        <Size>84f,20f</Size>
+        <Text>KEYS: DECK A</Text>
+        <Connection>
+          <ConfigKey>[VYRE],deck1_selected</ConfigKey>
+          <BindProperty>highlight</BindProperty>
+        </Connection>
+      </Label>
+
+      <Label>
+        <ObjectName>VyreDeckSelect</ObjectName>
+        <Size>84f,20f</Size>
+        <Text>KEYS: DECK B</Text>
+        <Connection>
+          <ConfigKey>[VYRE],deck2_selected</ConfigKey>
+          <BindProperty>highlight</BindProperty>
+        </Connection>
+      </Label>
+
+      <WidgetGroup><Size>7f,min</Size></WidgetGroup>
+
+      <Label>
         <ObjectName>ToolbarLogo</ObjectName>
         <Size>74f,24f</Size>
       </Label>
